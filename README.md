@@ -1,4 +1,4 @@
-# Code samples for my course named "technologies of server system development"
+# Code samples for my course named "Technologies of Server System Development"
 
 ## list of samples:
 
