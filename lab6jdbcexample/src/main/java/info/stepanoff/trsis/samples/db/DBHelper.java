@@ -113,9 +113,11 @@ public class DBHelper {
             public void onRemoval(RemovalNotification<Integer, ConnectionHolder> n) {
                 if (n.wasEvicted()) {
                     try {
+                        synchronized(n.getValue().getConnection()){
                         log.info("Closing old connection for key " + n.getKey());
                         n.getValue().getSchoolStatement().close();
                         n.getValue().getConnection().close();
+                        }
                     } catch (SQLException ex) {
                         log.error("Exception closing connection to database", ex);
                     }

@@ -18,6 +18,8 @@
     <modules>
         <module>springhelloworld</module>
         <module>lab1example</module>
+        <module>lab3example</module>
+        <module>lab6jdbcexample</module>
     </modules>
 
 </project>
