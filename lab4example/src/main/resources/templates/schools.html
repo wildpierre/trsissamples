@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"> 
+    <head>
+
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+
+        <meta name="_csrf" content="${_csrf.token}" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" content="${_csrf.parameterName}" th:content="${_csrf.parameterName}"/>
+
+        <title>Schools in our university</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular-1.7.5.min.js"></script>
+        <script src="js/schools.js"></script>
+
+    </head>
+    <body ng-app="schools" ng-controller="SchoolsController">
+
+        <div sec:authorize="isAnonymous()" >
+            <h1><a href="/login">Login</a></h1>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">     
+            <form name="logoutForm" th:action="@{/logout}" method="post">
+                <input type="submit"  class="btn btn-primary" value="Sign Out"/>
+            </form>
+        </div>
+
+        <h1>Организационная структура университета</h1>
+
+        <div ng-controller="getSchools" ng-show="schoolsList.length > 0">
+            <table id="schoolsTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th><h2>Номер</h2></th>
+                        <th><h2>Название</h2></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="school in schoolsList" id="{{school.id}}">
+                        <td>{{school.number}}</td>
+                        <td>{{school.name}}</td>
+                        <td><div sec:authorize="isAuthenticated()"><input type="button"  class="btn btn-primary" value="Удалить" ng-click="deleteSchool(school.id)"/></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-danger" role="alert" ng-show="errormessage">{{errormessage}}</div>
+
+        <div  sec:authorize="isAuthenticated()">
+            <form role="form" ng-submit="addSchool()">
+                <div class="form-group">
+                    <label for="inputnumber">Номер</label>
+                    <input type="number" class="form-control" id="inputnumber" name="inputnumber"  placeholder="Номер" ng-model="inputnumber"> </input>
+                </div>
+                <div class="form-group">
+                    <label for="inputname">Название</label>
+                    <input type="text" class="form-control" id="inputname" name="inputname" ng-model="inputname" placeholder="Название"></input>
+                </div>                
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+    </body>
+</html>
