@@ -24,6 +24,7 @@
             <version>8.5.4</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>

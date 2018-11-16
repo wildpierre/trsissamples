@@ -2,11 +2,8 @@ var app = angular.module('schools', []);
 
 app.controller("SchoolsController", function ($scope, $http) {
 
-    $scope.successGetSchoolsCallback = function (response) {
-        $scope.schoolsList = response.data;
-        for (var i = 0; i < $scope.schoolsList.length; i++) {
-            $scope.schoolsList[i].edit = 0;
-        }
+    $scope.successGetSchoolsCallback = function (response) {                
+         $scope.schoolsList = response.data;
         $scope.errormessage="";
     };
 
