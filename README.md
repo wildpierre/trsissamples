@@ -13,6 +13,7 @@
  - **lab2restexample**      - a simple REST implementation
  - **lab5thymeleafexample** - a simple application based on thymeleaf
  - **lab6hbexample**        - a simple application using access to database via Hibernate
+ - **lab6jdbctmpexample**   - a simple application using JDBC template access to database. 
  - **lab6jpaexample**       - a simple application using access to database via spring-boot-data-jpa repositories
  - **lab7kafkaexample**     - a simple application with message queue (using apache kafka)
  - **lab8dockerexample**    - a docker container
