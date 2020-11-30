@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <name>TRSIS code samples</name>
 
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,6 +21,7 @@
         <module>lab3example</module>
         <module>lab4example</module>
         <module>lab6jdbcexample</module>
+        <module>transactionsdemo</module>
     </modules>
 
 </project>
