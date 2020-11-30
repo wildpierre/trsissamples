@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <meta name="_csrf" content="${_csrf.token}" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" content="${_csrf.parameterName}" th:content="${_csrf.parameterName}"/>
+
+        <title>Schools in our university</title>
+
+        <script src="../static/js/angular.min.js" th:src="@{/js/angular.min.js}"></script>
+        <script src="../static/js/jquery-3.5.1.min.js" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+        <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+        <script src="../static/js/schools.js" th:src="@{/js/schools.js}"></script>
+        <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"></link>
+    </head>
+    <body ng-app="schools" ng-controller="SchoolsController">
+
+        <div th:replace="fragments/header :: header">
+
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Здесь будет заголовок</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Здесь будет ссылка</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <h1  th:text="#{schools.schools}">Здесь будет слово "факультеты" на языке локали</h1>
+
+        <div class="w-100">
+            <div class="alert alert-danger" role="alert" ng-show="errormessage">{{errormessage}}</div>
+
+            <div ng-controller="getSchools" ng-show="schoolsList.length > 0">
+                <table id="schoolsTable"  class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th th:text="#{schools.id}">ИД</th>
+                            <th  th:text="#{schools.number}">Номер</th>
+                            <th  th:text="#{schools.name}">Название</th>
+                            <th  th:text="#{schools.depts.count}">Число кафедр</th>
+
+                            <th sec:authorize="isAuthenticated()">Действие</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="school in schoolsList" id="{{school.id}}">
+                            <td>{{school.id}}</td>
+                            <td>{{school.number}}</td>
+                            <td><a href='depts/{{school.id}}'>{{school.name}}</a></td>
+                            <td>{{school.deptsCount}}</td>
+                            <td sec:authorize="isAuthenticated()"><input type="button" value="Удалить" ng-click="deleteSchool(school.id)"/></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+
+                <form role="form" ng-submit="addSchool()">
+
+                    <div class="row align-items-center">
+                        <div class="col"></div>
+
+                        <div class="col-auto">                     
+
+
+                            <div class="form-group">
+                                <label for="inputnumber">Номер</label>
+                                <input type="text" class="form-control" id="inputnumber" name="number" ng-model="inputnumber" />                           
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputname">Название</label>                        
+                                <input type="text" class="form-control" id="inputname" name="name" ng-model="inputname" />                        
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="Добавить"/>
+                            </div>
+                        </div>
+
+                        <div class="col"></div>
+
+                    </div>
+                </form>
+
+                <div ng-controller="getSchoolHistory" ng-show="schoolHistoryList.length > 0">
+                    <table id="schoolHistoryTable"  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th th:text="#{schoolhistory.id}">ИД</th>
+                                <th th:text="#{schoolhistory.date}">Дата</th>
+                                <th  th:text="#{schoolhistory.oldnumber}">Старый номер</th>
+                                <th  th:text="#{schoolhistory.newnumber}">Новый номер</th>
+                                <th  th:text="#{schoolhistory.oldname}">Старое название</th>
+                                <th  th:text="#{schoolhistory.newname}">Новое название</th>
+                                <th  th:text="#{schoolhistory.user}">Пользователь</th>
+                                <th  th:text="#{schoolhistory.operation}">Операция</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="schoolHistory in schoolHistoryList" id="{{schoolHistory.id}}">
+                                <td>{{schoolHistory.id}}</td>
+                                <td>{{schoolHistory.userFriendlyDate}}</td>
+                                <td>{{schoolHistory.oldNumber}}</td>
+                                <td>{{schoolHistory.newNumber}}</td>
+                                <td>{{schoolHistory.oldName}}</td>
+                                <td>{{schoolHistory.newName}}</td>
+                                <td>{{schoolHistory.userName}}</td>
+                                <td>{{schoolHistory.operation}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
