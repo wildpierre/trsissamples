@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /**
  *
  * @author Pavel
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "SCHOOL")
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class School implements Serializable {
 
@@ -37,8 +36,8 @@ public class School implements Serializable {
     @Column(name = "SCHOOL_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @OneToMany(targetEntity = Batch.class, mappedBy = "school" , fetch = FetchType.LAZY)
+
+    @OneToMany(targetEntity = Batch.class, mappedBy = "school", fetch = FetchType.LAZY)
     private List<Batch> batchesList;
 
     @Column(name = "SCHOOL_NUMBER", unique = true)

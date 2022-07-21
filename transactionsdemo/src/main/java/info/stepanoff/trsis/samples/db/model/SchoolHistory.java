@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -81,6 +82,7 @@ public class SchoolHistory implements Serializable  {
     
     @CreatedDate
     @Column(name = "school_history_date")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date changeDate;
 
 }

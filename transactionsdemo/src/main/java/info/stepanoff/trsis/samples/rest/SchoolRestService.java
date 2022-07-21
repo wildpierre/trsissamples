@@ -15,7 +15,6 @@ import info.stepanoff.trsis.samples.service.SchoolService;
 import java.security.Principal;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -40,7 +39,7 @@ public class SchoolRestService {
 
     @RequestMapping(value = "/public/rest/schools/{number}", method = RequestMethod.GET)
     public ResponseEntity<Object> findOne(@PathVariable("number") Integer number) {
-        School school = schoolService.findByNumber(number);
+        School school = schoolService.findByNumber(number).orElse(null);
         if (school == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -52,8 +51,9 @@ public class SchoolRestService {
     @Transactional
     @NeedRole(roleRegex = "ALL")
     @RequestMapping(value = "/rest/schools/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Integer id, @AuthenticationPrincipal Principal principal) {
-        School school = schoolService.findById(id);       
+    public void delete(@PathVariable("id") Integer id, Principal principal) {
+        School school = schoolService.findById(id).orElse(null);
+        if (school == null) return;
         schoolHistoryService.add(school.getId(), school.getNumber(), null, school.getName(), null, DELETE);        
         schoolService.delete(id);
     }
@@ -61,7 +61,7 @@ public class SchoolRestService {
     @Transactional
     @NeedRole(roleRegex = "ALL")
     @RequestMapping(value = "/rest/schools/{number}/{name}", method = RequestMethod.POST)
-    public ResponseEntity<Object> add(@PathVariable("number") Integer number, @PathVariable("name") String name, @AuthenticationPrincipal Principal principal) {
+    public ResponseEntity<Object> add(@PathVariable("number") Integer number, @PathVariable("name") String name, Principal principal) {
         School school = schoolService.add(number, name);
         schoolHistoryService.add(school.getId(), school.getNumber(), school.getName(), ADD);
         return ResponseEntity.ok(school);

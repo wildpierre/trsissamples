@@ -5,7 +5,7 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "User")
+@Table(name = "UserData")
 @Data
 
 public class User implements Serializable {
@@ -19,7 +19,7 @@ public class User implements Serializable {
     private String login;
 
     @Column(nullable = false)
-    private String hash;
+    private String passwordHash;
 
 
 }

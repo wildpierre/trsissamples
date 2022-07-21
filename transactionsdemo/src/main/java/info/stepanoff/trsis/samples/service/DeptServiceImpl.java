@@ -1,16 +1,16 @@
 package info.stepanoff.trsis.samples.service;
 
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import info.stepanoff.trsis.samples.db.model.Department;
 import info.stepanoff.trsis.samples.db.dao.DeptRepository;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class DeptServiceImpl implements DeptService {
-
-    private final static Logger log = Logger.getLogger(SchoolServiceImpl.class);
 
     @Autowired
     private DeptRepository batchRepository;

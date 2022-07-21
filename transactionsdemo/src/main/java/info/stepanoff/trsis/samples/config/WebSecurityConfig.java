@@ -18,15 +18,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**", "/public/rest/**")
-                .permitAll().and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("login").passwordParameter("pass")
-                .permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll().and()
-                .exceptionHandling().accessDeniedPage("/forbidden");
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/css/**", "/js/**", "/images/**", "/public/rest/**")
+                .permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("login")
+                .passwordParameter("pass")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/forbidden");
     }
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("guest")
+                .password("{noop}hello")
+                .authorities("MIN")               
+                .and()
+                .withUser("admin")
+                .password("{noop}hello")
+                .authorities("MIN","ALL")
+                .and()
+                .withUser("anotheradmin")
+                .password("{noop}hello")
+                .authorities("MIN","ALL");
     }
 
 }

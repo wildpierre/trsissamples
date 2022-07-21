@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import info.stepanoff.trsis.samples.db.model.SchoolHistory;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Sort;
 
 @Service
-@Log4j
+@Slf4j
 public class SchoolHistoryServiceImpl implements SchoolHistoryService {
 
     @Autowired
@@ -32,7 +33,7 @@ public class SchoolHistoryServiceImpl implements SchoolHistoryService {
 
     @Override
     public Iterable<SchoolHistory> listAll() {
-        return schoolHistoryRepository.findAll(new Sort(Sort.Direction.DESC, "changeDate"));
+        return schoolHistoryRepository.findAll(Sort.by(Sort.Direction.DESC,"changeDate").descending());
     }
     
 }

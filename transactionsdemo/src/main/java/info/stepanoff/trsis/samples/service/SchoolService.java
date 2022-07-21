@@ -1,6 +1,7 @@
 package info.stepanoff.trsis.samples.service;
 
 import info.stepanoff.trsis.samples.db.model.School;
+import java.util.Optional;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +12,9 @@ public interface SchoolService {
 
     void delete(Integer id);
     
-    School findById(Integer id);
+    Optional<School> findById(Integer id);
     
-    School findByNumber(Integer id);
+    Optional<School> findByNumber(Integer id);
     
     School add(Integer number, String name);
 

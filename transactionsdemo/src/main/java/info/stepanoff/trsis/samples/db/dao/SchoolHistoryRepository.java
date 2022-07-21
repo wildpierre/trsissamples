@@ -2,6 +2,7 @@ package info.stepanoff.trsis.samples.db.dao;
 
 import info.stepanoff.trsis.samples.db.model.SchoolHistory;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface SchoolHistoryRepository extends PagingAndSortingRepository<SchoolHistory, Integer> {             
     
-         List<SchoolHistory> findById(Integer id);
+         //Optional<List<SchoolHistory>> findAllById(Integer id);
                 
          List<SchoolHistory> findBySchoolId(Integer schoolid);
 }

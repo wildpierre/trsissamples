@@ -2,7 +2,6 @@
  * this code is available under GNU GPL v3
  * https://www.gnu.org/licenses/gpl-3.0.en.html
  */
-
 package info.stepanoff.trsis.samples.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +20,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          .withUser("guest").password("hello")
-          .authorities("ROLE_USER");
-    }    
+                .withUser("guest").password("{noop}hello")
+                .authorities("ROLE_USER");
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
-    }    
-    
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/**", "/css/**", "/js/**", "/img/**", "/public/rest/**")

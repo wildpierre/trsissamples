@@ -35,8 +35,8 @@ public class DBHelper {
 
     static Connection conn;
 
-    static final String DATABASE_URL = "jdbc:derby:memory:demo";
-    static final String DATABASE_CREATE_URL = DATABASE_URL + ";create=true";
+    static final String DATABASE_URL = "jdbc:h2:mem:testdb";
+    static final String DATABASE_CREATE_URL = DATABASE_URL + "";
 
     static final int NUMBER_OF_CONNECTIONS = 30;
     static volatile int currentConnection = 0;
@@ -111,136 +111,161 @@ public class DBHelper {
         listener = new RemovalListener<Integer, ConnectionHolder>() {
             @Override
             public void onRemoval(RemovalNotification<Integer, ConnectionHolder> n) {
-                if (n.wasEvicted()) {
-                    try {
-                        synchronized (n.getValue().getConnection()) {
-                            log.info("Closing old connection for key " + n.getKey());
-                            n.getValue().getSchoolStatement().close();
-                            n.getValue().getConnection().close();
-                        }
-                    } catch (SQLException ex) {
-                        log.error("Exception closing connection to database", ex);
+                try {
+                    synchronized (n.getValue().getConnection()) {
+                        log.info("Closing old connection for key " + n.getKey());
+                        n.getValue().getSchoolStatement().close();
+                        n.getValue().getDeleteSchoolStatement().close();
+                        n.getValue().getAddSchoolStatement().close();
+                        n.getValue().getBatchStatement().close();
+                        n.getValue().getConnection().commit();
+                        n.getValue().getConnection().close();
                     }
+                } catch (SQLException ex) {
+                    log.error("Exception closing connection to database", ex);
                 }
             }
         };
 
-        cache = CacheBuilder.newBuilder().refreshAfterWrite(1, TimeUnit.MINUTES).removalListener(listener).build(loader);
+        cache = CacheBuilder.newBuilder().refreshAfterWrite(10, TimeUnit.SECONDS).removalListener(listener).build(loader);
     }
 
-    private static PreparedStatement getSchoolStatement() throws SQLException {
+    private static ConnectionHolder getConnectionHolder() throws SQLException {
         currentConnection = (currentConnection + 1) % NUMBER_OF_CONNECTIONS;
-        return cache.getUnchecked(currentConnection).getSchoolStatement();
+        return cache.getUnchecked(currentConnection);
     }
 
     public static List<School> getAllSchools() throws SQLException {
 
         List<School> result = new LinkedList<>();
-        PreparedStatement stmt = getSchoolStatement();
+        while (true) {
 
-        synchronized (stmt.getConnection()) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt(SCHOOL_ID);
-                    int nomer = rs.getInt(SCHOOL_NUMBER);
-                    String imya = rs.getString(SCHOOL_NAME);
-                    School fakultet = new School(id, nomer, imya);
+            ConnectionHolder connectionHolder = getConnectionHolder();
 
-                    result.add(fakultet);
+            synchronized (connectionHolder.getConnection()) {
+
+                PreparedStatement stmt = connectionHolder.getSchoolStatement();
+
+                if (stmt.isClosed()) {
+                    continue;
+                }
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt(SCHOOL_ID);
+                        int nomer = rs.getInt(SCHOOL_NUMBER);
+                        String imya = rs.getString(SCHOOL_NAME);
+                        School fakultet = new School(id, nomer, imya);
+
+                        result.add(fakultet);
+                    }
                 }
             }
             return result;
         }
     }
 
-    private static PreparedStatement getDeleteSchoolStatement() throws SQLException {
-        currentConnection = (currentConnection + 1) % NUMBER_OF_CONNECTIONS;
-        return cache.getUnchecked(currentConnection).getDeleteSchoolStatement();
-    }
-
     public static void deleteSchool(Integer id) throws SQLException {
 
-        PreparedStatement stmt = getDeleteSchoolStatement();
+        while (true) {
 
-        synchronized (stmt.getConnection()) {
-            try {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-                stmt.getConnection().commit();
-            } catch (Exception e) {
-                stmt.getConnection().rollback();
-                throw e;
+            ConnectionHolder connectionHolder = getConnectionHolder();
+
+            synchronized (connectionHolder.getConnection()) {
+
+                PreparedStatement stmt = connectionHolder.getDeleteSchoolStatement();
+
+                if (stmt.isClosed()) {
+                    continue;
+                }
+                try {
+                    stmt.setInt(1, id);
+                    stmt.executeUpdate();
+                    stmt.getConnection().commit();
+                } catch (Exception e) {
+                    stmt.getConnection().rollback();
+                    log.error("Unable to delete school", e);
+                    throw e;
+                }
             }
+            break;
         }
 
-        log.info("school with id= " + id + " has been deleted");
-    }
-
-    private static PreparedStatement getAddSchoolStatement() throws SQLException {
-
-        currentConnection = (currentConnection + 1) % NUMBER_OF_CONNECTIONS;
-        return cache.getUnchecked(currentConnection).getAddSchoolStatement();
+        log.debug("school with id= " + id + " has been deleted");
     }
 
     public static School addSchool(Integer number, String name) throws SQLException {
 
-        PreparedStatement stmt = getAddSchoolStatement();
-        ResultSet rs1;
+        while (true) {
 
-        synchronized (stmt.getConnection()) {
-            try {
-                stmt.setInt(1, number);
-                stmt.setString(2, name);
-                stmt.executeUpdate();
-                rs1 = stmt.getGeneratedKeys();
+            ResultSet rs1;
+            ConnectionHolder connectionHolder = getConnectionHolder();
 
-                try (ResultSet rs = rs1) {
-                    rs.next();
-                    Integer key = rs.getInt(1);
-                    log.info("Insert into School executed");
-                    rs.close();
-                    stmt.getConnection().commit();
-                    return new School(key, number, name);
+            synchronized (connectionHolder.getConnection()) {
+
+                PreparedStatement stmt = connectionHolder.getAddSchoolStatement();
+
+                if (stmt.isClosed()) {
+                    continue;
                 }
-            } catch (Exception e) {
-                stmt.getConnection().rollback();
-                throw e;
+                try {
+                    stmt.setInt(1, number);
+                    stmt.setString(2, name);
+                    stmt.executeUpdate();
+                    rs1 = stmt.getGeneratedKeys();
+
+                    try (ResultSet rs = rs1) {
+                        rs.next();
+                        Integer key = rs.getInt(1);
+                        log.debug("Insert into School executed");
+                        rs.close();
+                        stmt.getConnection().commit();
+                        return new School(key, number, name);
+                    }
+                } catch (Exception e) {
+                    stmt.getConnection().rollback();
+                    log.error("Unable to add new school", e);
+                    throw e;
+                }
             }
         }
-    }
-
-    private static PreparedStatement getBatchStatement() throws SQLException {
-        currentConnection = (currentConnection + 1) % NUMBER_OF_CONNECTIONS;
-        return cache.getUnchecked(currentConnection).getBatchStatement();
     }
 
     public static List<Batch> getBatchBySchool(Integer schoolId) throws SQLException {
 
         List<Batch> result = new LinkedList<>();
 
-        PreparedStatement stmt = getBatchStatement();
+        while (true) {
 
-        ResultSet rs1;
+            ConnectionHolder connectionHolder = getConnectionHolder();
 
-        synchronized (stmt.getConnection()) {
-            stmt.setInt(1, schoolId);
-            rs1 = stmt.executeQuery();
+            synchronized (connectionHolder.getConnection()) {
 
-            log.info("getBatchBySchool query executed");
+                PreparedStatement stmt = connectionHolder.getBatchStatement();
 
-            try (ResultSet rs = rs1) { //limitation of Java 8
-                while (rs.next()) {
+                if (stmt.isClosed()) {
+                    continue;
+                }
 
-                    int id = rs.getInt(BATCH_ID);
-                    String number = rs.getString(BATCH_NUMBER);
+                stmt.setInt(1, schoolId);
 
-                    Batch batch = new Batch(id, number);
+                log.debug("getBatchBySchool query executed");
 
-                    result.add(batch);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
 
+                        int id = rs.getInt(BATCH_ID);
+                        String number = rs.getString(BATCH_NUMBER);
+
+                        Batch batch = new Batch(id, number);
+
+                        result.add(batch);
+
+                    }
                 }
             }
+            break;
         }
         return result;
     }
+
 }
