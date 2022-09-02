@@ -1,13 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>info.stepanoff</groupId>
-    <artifactId>trsis-parent</artifactId>
-   <version>1.0.0</version>
-    <packaging>pom</packaging>
-    <name>TRSIS code samples</name>
+    <groupId>info.stepanoff.trsis.samples.kafkadocker</groupId>
+    <artifactId>kafka-and-docker-example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+<packaging>pom</packaging>
 
     <url>https://maven.apache.org</url>
+
+    <name>Kafka and docker example</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,13 +17,8 @@
     </properties>
 
     <modules>
-        <module>springhelloworld</module>
-        <module>lab1example</module>
-        <module>lab3example</module>
-        <module>lab4example</module>
-        <module>lab6jdbcexample</module>
-        <module>lab78example</module>
-        <module>transactionsdemo</module>
+        <module>lab</module>
+        <module>consumer</module>
     </modules>
 
 </project>

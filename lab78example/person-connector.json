@@ -1,0 +1,18 @@
+{
+    "name": "person-connector",
+    "config": {
+        "name": "person-connector",
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "database.hostname": "postgres",
+        "database.port": "5432",
+        "database.dbname": "deb",
+        "database.user": "postgres",
+        "database.password": "debeziumpass",
+        "database.server.name": "postgres",
+        "plugin.name": "pgoutput",
+        "slot.name": "debezium_person",
+        "publication.name": "dbz_person",
+        "table.include.list": "example.person"
+    }
+}

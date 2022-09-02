@@ -1,0 +1,28 @@
+spring:
+   datasource:
+      url: jdbc:h2:mem:testdb
+      driverClassName: org.h2.Driver
+      username: sa
+      password: password
+   jpa:
+#      database-platform: org.hibernate.dialect.H2Dialect
+      generate-ddl: true
+      hibernate:
+         ddl-auto: create-drop
+      defer-datasource-initialization: true
+      show-sql: true
+      properties:
+         hibernate:
+            format_sql: true
+            globally_quoted_identifiers: true
+   mvc:
+      pathmatch:
+         matching-strategy: ant-path-matcher
+server:
+   port: 8443
+   ssl:
+      key-store: target/keystore.p12
+      key-store-password: mypassword
+      keyStoreType: PKCS12
+      keyAlias: tomcat
+
