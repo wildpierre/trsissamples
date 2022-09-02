@@ -9,6 +9,7 @@
  - **lab4example**          - a simple application with authorization (spring-boot, thymeleaf, angular)
  - **lab6jdbcexample**      - a simple application using JDBC access to database. The code demonstrates how much efforts you need to make JDBC data access thread-safe and efficient.
  - **transactionsdemo**      - a simple application demonstrating usage of transactions. All deletes in main data cause first writing change history. If deletion does not succeed (e.g. due to foreign key restrictions) change history rolls back.
+ - **lab78example**         - an elementary example how to create microservice app with the basic tools learned in my course
  
 
 ### Planned:
@@ -17,5 +18,3 @@
  - **lab6hbexample**        - a simple application using access to database via Hibernate
  - **lab6jdbctmpexample**   - a simple application using JDBC template access to database. 
  - **lab6jpaexample**       - a simple application using access to database via spring-boot-data-jpa repositories
- - **lab7kafkaexample**     - a simple application with message queue (using apache kafka)
- - **lab8dockerexample**    - a docker container
