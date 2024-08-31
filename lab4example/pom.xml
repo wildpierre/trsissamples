@@ -13,7 +13,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.1</version>
+                <version>3.3.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
         <dependency>
@@ -51,6 +51,13 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>2.3.230</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.29.1</version>
         </dependency>
 
         <dependency>
@@ -83,19 +90,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator-autoconfigure</artifactId>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
     <build>
-        <finalName>trsisJSPSample</finalName>
+        <finalName>lab4SecureWebapp</finalName>
 
         <plugins>
-            
+                        
             <!--Always clean-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -143,7 +148,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.1</version>                
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -152,6 +157,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>  
+                <groupId>org.liquibase</groupId>  
+                <artifactId>liquibase-maven-plugin</artifactId>  
+                <version>4.29.1</version>  
+                <configuration>  
+                    <propertyFile>liquibase.properties</propertyFile>  
+                </configuration>  
+                <dependencies>  
+                    <dependency>  
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>2.3.230</version>
+                    </dependency>  
+                </dependencies>  
+            </plugin>  
+
 
         </plugins>
     </build>

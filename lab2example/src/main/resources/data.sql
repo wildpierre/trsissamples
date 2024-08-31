@@ -1,0 +1,32 @@
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (1, 'Институт аэрокосмических приборов и систем (институт 1)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (2, 'Институт радиотехники, электроники и связи (институт 2)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (3, 'Институт инновационных технологий в электромеханике и робототехнике (институт 3)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (4, 'Институт вычислительных систем и программирования (институт 4)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (5, 'Институт информационных систем и защиты информации (институт 5)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (6, 'Гуманитарный факультет (факультет 6)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (7, 'Институт военного образования (институт 7)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (8, 'Институт технологий предпринимательства (институт 8)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (9, 'Юридический факультет (факультет 9)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (10, 'Институт непрерывного и дистанционного образования (вечернее и заочное обучение) (институт 10)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (11, 'Факультет дополнительного профессионального образования (факультет 11)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (12, 'Факультет среднего профессионального образования (факультет 12)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (13, 'Институт фундаментальной подготовки и технологических инноваций (институт ФПТИ)');
+insert into SCHOOL (SCHOOL_NUMBER, SCHOOL_NAME) values (14, 'Ивангородский филиал ГУАП');
+
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('111',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('112',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('113',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('121',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('122',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('123',1);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('411',4);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('412',4);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('413',4);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('421',4);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('422',4);
+--insert into BATCH (BATCH_NUMBER, BATCH_SCHOOL_ID) values ('423',4);
+
+--insert into STUDENT(STUD_FNAME,STUD_PNAME, STUD_LNAME,STUD_NUM_ZACH,STUD_BATCH_ID) values('Иван','Иванович','Иванов','А112/2016',1);
+--insert into STUDENT(STUD_FNAME,STUD_PNAME, STUD_LNAME,STUD_NUM_ZACH,STUD_BATCH_ID) values('Петр','Петрович','Петров','А113/2016',1);
+--insert into STUDENT(STUD_FNAME,STUD_PNAME, STUD_LNAME,STUD_NUM_ZACH,STUD_BATCH_ID) values('Сидор','Сидорович','Сидоров','А114/2016',2);
+--insert into STUDENT(STUD_FNAME,STUD_PNAME, STUD_LNAME,STUD_NUM_ZACH,STUD_BATCH_ID) values('Семен','Семенович','Семенов','А115/2016',2);

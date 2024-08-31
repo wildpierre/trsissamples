@@ -1,3 +1,10 @@
+<!--
+
+ this code is available under GNU GPL v3
+ https://www.gnu.org/licenses/gpl-3.0.en.html
+
+-->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -8,17 +15,11 @@
     <name>AJAX and REST - based webapp</name>
     <url>https://maven.apache.org</url>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.0</version>
+	</parent>
 
     <dependencies>
         <dependency>
@@ -40,15 +41,39 @@
 
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
         </dependency>
-
-
+        
+        <!--<dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>-->
+        
+        <!--        <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+    
+            
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+        -->            
         <dependency>
             <groupId>com.github.joschi.jackson</groupId>
             <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>2.6.4</version>
+            <version>2.15.2</version>
         </dependency>
 
         <dependency>
@@ -66,9 +91,14 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>2.3.230</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.29.1</version>
+        </dependency>
 
 
         <dependency>
@@ -89,7 +119,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.1</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -98,6 +128,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>  
+                <groupId>org.liquibase</groupId>  
+                <artifactId>liquibase-maven-plugin</artifactId>  
+                <version>4.29.1</version>  
+                <configuration>  
+                    <propertyFile>liquibase.properties</propertyFile>  
+                </configuration>  
+                <dependencies>  
+                    <dependency>  
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>2.3.230</version>
+                    </dependency>  
+                </dependencies>  
+            </plugin>  
         </plugins>
     </build>
     <properties>

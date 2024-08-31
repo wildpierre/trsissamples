@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-database
+      author: pavel.stepanov
+      preConditions:
+        - onFail: HALT
+          not:
+            tableExists:
+              tableName: school
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: school_pkey
+                  name: school_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: school_number
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: school_name
+                  type: VARCHAR(255)
+            tableName: school
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: batch_pkey
+                  name: batch_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: batch_number
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: batch_school_id
+                  type: BIGINT
+            tableName: batch
+        -  addForeignKeyConstraint:
+            baseColumnNames:  batch_school_id
+            baseTableName:  batch
+            constraintName:  fk_batch_to_school
+            referencedColumnNames:  school_id
+            referencedTableName:  school
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: login
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: pass_hash
+                  type: VARCHAR(255)
+            tableName: users
+

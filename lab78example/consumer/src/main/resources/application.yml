@@ -17,4 +17,5 @@ spring:
 kafka:
     bootstrapAddress: localhost:9092
     groupId: 7523
+    topic: TRSIS3
 

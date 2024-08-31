@@ -1,18 +1,20 @@
 package info.stepanoff.trsis.lecture5;
 
 import info.stepanoff.trsis.lecture5.service.HelloWorldBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import static java.lang.System.exit;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @SpringBootApplication
+@RequiredArgsConstructor
 public class ConsoleApplication implements CommandLineRunner {
 
-    @Autowired
-    private HelloWorldBean helloBean;
+    private final HelloWorldBean helloBean;
 
     public static void main(String[] args) throws Exception {
         SpringApplication app = new SpringApplication(ConsoleApplication.class);
@@ -21,8 +23,7 @@ public class ConsoleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        System.out.println(helloBean.getMessage());
+        log.info(helloBean.getMessage());
         exit(0);
     }
 }

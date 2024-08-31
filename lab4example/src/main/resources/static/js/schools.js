@@ -2,9 +2,6 @@ var app = angular.module('schools', []).config(function ($httpProvider) {
     csrftoken = $("meta[name='_csrf']").attr("content");
     csrfheader = $("meta[name='_csrf_header']").attr("content");
     $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = csrftoken;
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(csrfheader, csrftoken);
-    });
 });
 
 app.controller("SchoolsController", function ($scope, $http) {

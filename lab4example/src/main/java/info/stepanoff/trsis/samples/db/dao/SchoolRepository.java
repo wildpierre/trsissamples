@@ -4,15 +4,18 @@
  */
 package info.stepanoff.trsis.samples.db.dao;
 
-import info.stepanoff.trsis.samples.db.model.School;
+import info.stepanoff.trsis.samples.db.model.SchoolPE;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Pavel
  */
-public interface SchoolRepository extends CrudRepository<School, Integer> {
+public interface SchoolRepository extends CrudRepository<SchoolPE, Integer> {
 
-    School findByNumber(Integer number);
+    public Optional<SchoolPE> findByNumber(Integer number);
+
+    public List<SchoolPE> findAll();
 }

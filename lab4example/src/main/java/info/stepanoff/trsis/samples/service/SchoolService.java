@@ -5,15 +5,17 @@
 
 package info.stepanoff.trsis.samples.service;
 
-import info.stepanoff.trsis.samples.db.model.School;
+import info.stepanoff.trsis.samples.rest.model.SchoolDTO;
+import java.util.List;
 
 public interface SchoolService {
 
-    Iterable<School> listAll();
+    List<SchoolDTO> listAll();
 
     void delete(Integer id);
     
-    School add(Integer number, String name);
+    SchoolDTO add(Integer number, String name);
     
-    School findByNumber(Integer number);
+    SchoolDTO findByNumber(Integer number);
+
 }

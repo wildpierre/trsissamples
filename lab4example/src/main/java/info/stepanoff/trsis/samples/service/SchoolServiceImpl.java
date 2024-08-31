@@ -2,29 +2,36 @@
  * this code is available under GNU GPL v3
  * https://www.gnu.org/licenses/gpl-3.0.en.html
  */
-
 package info.stepanoff.trsis.samples.service;
 
-
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import info.stepanoff.trsis.samples.db.dao.SchoolRepository;
-import info.stepanoff.trsis.samples.db.model.School;
+import info.stepanoff.trsis.samples.db.model.SchoolPE;
+import info.stepanoff.trsis.samples.rest.model.SchoolDTO;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SchoolServiceImpl implements SchoolService {
-    
 
-    @Autowired
-    private SchoolRepository schoolRepository;
+    private final SchoolRepository schoolRepository;
+
+    private final ObjectMapper objectMapper;
 
     @Override
-    public Iterable<School> listAll() {
-        return schoolRepository.findAll();
+    public List<SchoolDTO> listAll() {
+        return schoolRepository.findAll().stream()
+                .map(schoolPE -> objectMapper.convertValue(schoolPE, SchoolDTO.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -33,12 +40,13 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public School add(Integer number, String name) {
-        return schoolRepository.save(new School(number, name));
+    public SchoolDTO add(Integer number, String name) {
+        return objectMapper.convertValue(schoolRepository.save(new SchoolPE(number, name)), SchoolDTO.class);
     }
 
     @Override
-    public School findByNumber(Integer number) {
-        return schoolRepository.findByNumber(number);
+    public SchoolDTO findByNumber(Integer number) {
+        Optional<SchoolPE> schoolPE = schoolRepository.findByNumber(number);
+        return schoolPE.map(school -> objectMapper.convertValue(school, SchoolDTO.class)).orElse(null);
     }
 }
