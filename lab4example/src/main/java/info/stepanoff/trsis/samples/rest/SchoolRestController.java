@@ -32,17 +32,17 @@ public class SchoolRestController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
 
-    @Operation(summary = "Получить перечень факультетов",
-            description = "Получить перечень факультетов методом GET",
+    @Operation(summary = "РџРѕР»СѓС‡РёС‚СЊ РїРµСЂРµС‡РµРЅСЊ С„Р°РєСѓР»СЊС‚РµС‚РѕРІ",
+            description = "РџРѕР»СѓС‡РёС‚СЊ РїРµСЂРµС‡РµРЅСЊ С„Р°РєСѓР»СЊС‚РµС‚РѕРІ РјРµС‚РѕРґРѕРј GET",
             responses = {
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
-                        description = "Успешное выполнение"),
+                        description = "РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401",
-                        description = "Требуется аутентификация"),
+                        description = "РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403",
-                        description = "Аутентификация предоставлена, но у пользователя нет доступа"),
+                        description = "РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР°, РЅРѕ Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РґРѕСЃС‚СѓРїР°"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404",
-                        description = "Ресурс не найден")
+                        description = "Р РµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ")
             })
     public ResponseEntity<List<SchoolDTO>> browse() {
         return ResponseEntity.ok(schoolService.listAll());
@@ -50,33 +50,33 @@ public class SchoolRestController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
 
-    @Operation(summary = "Получить перечень факультетов",
-            description = "Получить перечень факультетов методом POST",
+    @Operation(summary = "РџРѕР»СѓС‡РёС‚СЊ РїРµСЂРµС‡РµРЅСЊ С„Р°РєСѓР»СЊС‚РµС‚РѕРІ",
+            description = "РџРѕР»СѓС‡РёС‚СЊ РїРµСЂРµС‡РµРЅСЊ С„Р°РєСѓР»СЊС‚РµС‚РѕРІ РјРµС‚РѕРґРѕРј POST",
             responses = {
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
-                        description = "Успешное выполнение"),
+                        description = "РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401",
-                        description = "Требуется аутентификация"),
+                        description = "РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403",
-                        description = "Аутентификация предоставлена, но у пользователя нет доступа"),
+                        description = "РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР°, РЅРѕ Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РґРѕСЃС‚СѓРїР°"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404",
-                        description = "Ресурс не найден")
+                        description = "Р РµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ")
             })
     public ResponseEntity<List<SchoolDTO>> browsePost(Principal principal) {
         return ResponseEntity.ok(schoolService.listAll());
     }
 
-    @Operation(summary = "Удаление факультета",
-            description = "Факультет может быть удален, если с ним не связаны группы",
+    @Operation(summary = "РЈРґР°Р»РµРЅРёРµ С„Р°РєСѓР»СЊС‚РµС‚Р°",
+            description = "Р¤Р°РєСѓР»СЊС‚РµС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ СѓРґР°Р»РµРЅ, РµСЃР»Рё СЃ РЅРёРј РЅРµ СЃРІСЏР·Р°РЅС‹ РіСЂСѓРїРїС‹",
             responses = {
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
-                        description = "Успешное выполнение"),
+                        description = "РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401",
-                        description = "Требуется аутентификация"),
+                        description = "РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403",
-                        description = "Аутентификация предоставлена, но у пользователя нет доступа"),
+                        description = "РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР°, РЅРѕ Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РґРѕСЃС‚СѓРїР°"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404",
-                        description = "Ресурс не найден")
+                        description = "Р РµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ")
             })
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Integer id, Principal principal) {
@@ -88,8 +88,8 @@ public class SchoolRestController {
         schoolService.delete(id);
     }
 
-    @Operation(summary = "Удаление факультета - метод для тестирования",
-            description = "Факультет может быть удален, если с ним не связаны группы")
+    @Operation(summary = "РЈРґР°Р»РµРЅРёРµ С„Р°РєСѓР»СЊС‚РµС‚Р° - РјРµС‚РѕРґ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ",
+            description = "Р¤Р°РєСѓР»СЊС‚РµС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ СѓРґР°Р»РµРЅ, РµСЃР»Рё СЃ РЅРёРј РЅРµ СЃРІСЏР·Р°РЅС‹ РіСЂСѓРїРїС‹")
     @RequestMapping(value = "/mockdelete/{id}", method = RequestMethod.GET)
     public void mockdelete(@PathVariable("id") Integer id, Principal principal) {
         if (principal == null) {
@@ -100,17 +100,17 @@ public class SchoolRestController {
     }
 
     @RequestMapping(value = "/{number}/{name}", method = RequestMethod.POST)
-    @Operation(summary = "Создать новый факультет",
-            description = "Создать новый факультет - расширенное описание",
+    @Operation(summary = "РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ С„Р°РєСѓР»СЊС‚РµС‚",
+            description = "РЎРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ С„Р°РєСѓР»СЊС‚РµС‚ - СЂР°СЃС€РёСЂРµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ",
             responses = {
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
-                        description = "Успешное выполнение"),
+                        description = "РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401",
-                        description = "Требуется аутентификация"),
+                        description = "РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403",
-                        description = "Аутентификация предоставлена, но у пользователя нет доступа"),
+                        description = "РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР°, РЅРѕ Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РґРѕСЃС‚СѓРїР°"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404",
-                        description = "Ресурс не найден")
+                        description = "Р РµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ")
             })
     public ResponseEntity<SchoolDTO> add(@PathVariable("number") Integer number, @PathVariable("name") String name, Principal principal) {
         if (principal == null) {
@@ -120,17 +120,17 @@ public class SchoolRestController {
         return ResponseEntity.ok(schoolService.add(number, name));
     }
 
-    @Operation(summary = "Поиск факультета по номеру",
-            description = "Поиск факультета по номеру - расширенное описание",
+    @Operation(summary = "РџРѕРёСЃРє С„Р°РєСѓР»СЊС‚РµС‚Р° РїРѕ РЅРѕРјРµСЂСѓ",
+            description = "РџРѕРёСЃРє С„Р°РєСѓР»СЊС‚РµС‚Р° РїРѕ РЅРѕРјРµСЂСѓ - СЂР°СЃС€РёСЂРµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ",
             responses = {
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200",
-                        description = "Успешное выполнение"),
+                        description = "РЈСЃРїРµС€РЅРѕРµ РІС‹РїРѕР»РЅРµРЅРёРµ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401",
-                        description = "Требуется аутентификация"),
+                        description = "РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403",
-                        description = "Аутентификация предоставлена, но у пользователя нет доступа"),
+                        description = "РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР°, РЅРѕ Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РґРѕСЃС‚СѓРїР°"),
                 @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404",
-                        description = "Ресурс не найден")
+                        description = "Р РµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ")
             })
     @RequestMapping(value = "/{number}", method = RequestMethod.GET)
     public ResponseEntity<SchoolDTO> findByNumber(@PathVariable("number") Integer number) {

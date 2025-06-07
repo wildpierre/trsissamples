@@ -12,13 +12,13 @@ import lombok.Data;
  * @author Pavel Stepanov
  */
 @Data
-@Schema(description = "Факультет")
+@Schema(description = "Р¤Р°РєСѓР»СЊС‚РµС‚")
 public class SchoolDTO {
 
-    @Schema(description = "Идентификатор факультета")
+    @Schema(description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„Р°РєСѓР»СЊС‚РµС‚Р°")
     private Integer id;
-    @Schema(description = "Номер факультета")
+    @Schema(description = "РќРѕРјРµСЂ С„Р°РєСѓР»СЊС‚РµС‚Р°")
     private Integer number;
-    @Schema(description = "Название факультета")
+    @Schema(description = "РќР°Р·РІР°РЅРёРµ С„Р°РєСѓР»СЊС‚РµС‚Р°")
     private String name;
 }

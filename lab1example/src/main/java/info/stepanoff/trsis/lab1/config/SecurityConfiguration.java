@@ -7,8 +7,10 @@ package info.stepanoff.trsis.lab1.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  *
@@ -18,12 +20,21 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests((authz) -> authz
-                .anyRequest().permitAll().and().csrf().disable()
-            )
-            .httpBasic(withDefaults());
-        return http.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.logout(AbstractHttpConfigurer::disable);
+        http.sessionManagement((configurer) -> {
+            configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        });
+        http.authorizeHttpRequests((requests) -> {
+            ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
+                    ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
+                            ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
+                                            requests.requestMatchers(new String[]{"/**"})).permitAll()
+                                            .requestMatchers(new String[]{"/api/v*/**"})).permitAll()
+                            .anyRequest()).denyAll();
+        });
+
+        return (SecurityFilterChain)http.build();
     }
 }
